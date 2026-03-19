@@ -1,15 +1,20 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
 const helmet = require('helmet');
+const compression = require('compression');
 const rateLimit = require('express-rate-limit');
+const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 require('dotenv').config();
+
+// Connect to database
+connectDB();
 
 const app = express();
 
 // Security Middleware
 app.use(helmet());
+app.use(compression());
 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
@@ -39,22 +44,8 @@ app.get('/', (req, res) => {
 app.use(notFound);
 app.use(errorHandler);
 
-// Database connection
 const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-    console.error('MONGO_URI is not defined in .env file');
-    process.exit(1);
-}
-
-mongoose.connect(MONGO_URI)
-    .then(() => {
-        console.log('Connected to MongoDB');
-        app.listen(PORT, () => {
-            console.log(`Server is running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
-        });
-    })
-    .catch((err) => {
-        console.error('Error connecting to MongoDB:', err.message);
-    });
+app.listen(PORT, () => {
+    console.log(`Server is running in ${process.env.NODE_ENV || 'development'} mode on port ${PORT}`);
+});

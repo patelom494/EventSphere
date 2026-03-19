@@ -75,16 +75,6 @@ const AdminDashboard = () => {
                         <h2 className="text-4xl font-black text-text-primary tracking-tight mb-2">Command Center</h2>
                         <p className="text-text-secondary font-medium">Strategic overview of all global operations and personnel.</p>
                     </div>
-                    <div className="flex gap-3">
-                        <Button variant="outline" className="gap-2">
-                            <UserPlus size={18} />
-                            Recruit
-                        </Button>
-                        <Button className="gap-2">
-                            <Plus size={18} />
-                            New Mission
-                        </Button>
-                    </div>
                 </div>
 
                 {/* Stats Grid */}
