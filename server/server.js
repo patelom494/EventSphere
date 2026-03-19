@@ -28,7 +28,11 @@ const corsOptions = {
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
     optionsSuccessStatus: 200,
 };
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+app.use(cors({
+  origin: "https://event-sphere-aplr2tgfm-patel-oms-projects-679f2516.vercel.app",
+  credentials: true
+}));
 
 app.use(express.json());
 
